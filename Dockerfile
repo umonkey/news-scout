@@ -4,7 +4,7 @@
 FROM rust:1.99.0 AS builder
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
@@ -30,7 +30,7 @@ FROM debian:stable-slim
 ENV TZ=Asia/Yerevan
 
 # Install runtime dependencies
-RUN apt-get update && apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends \
     libsqlite3-0 \
     sqlite3 \
     ca-certificates \
