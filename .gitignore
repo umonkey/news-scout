@@ -1,0 +1,22 @@
+# Local
+/bot.session
+/bot.db
+*.session
+*.db
+*.sqlite
+*.sqlite3
+
+# Rust
+/target
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+.envrc
+.env

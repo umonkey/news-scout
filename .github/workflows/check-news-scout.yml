@@ -1,0 +1,46 @@
+# Runs static analysis and tests for the news-scout service.
+#
+# This workflow runs on pull requests that modify the news-scout service,
+# excluding the master branch.
+
+name: Check News Scout
+
+on:
+  push:
+    branches-ignore: [ master ]
+    paths:
+      - 'services/news-scout/**'
+  pull_request:
+    branches-ignore: [ master ]
+    paths:
+      - 'services/news-scout/**'
+
+jobs:
+  check:
+    name: "Check news-scout"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/news-scout
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Install dependencies"
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libsqlite3-dev
+          version: 1.0
+
+      - name: "Install Rust"
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.99.0"
+          components: clippy, rustfmt
+
+      - name: "Rust Cache"
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: services/news-scout
+
+      - name: "Run checks"
+        run: make check

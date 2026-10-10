@@ -1,0 +1,16 @@
+target/
+.git/
+.gitignore
+.dockerignore
+.venv/
+.env
+.envrc
+*.session
+*.db
+*.sqlite
+*.sqlite3
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
