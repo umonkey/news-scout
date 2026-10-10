@@ -1,32 +1,35 @@
-# Runs static analysis and tests for the news-scout service.
+# Runs static analysis and tests for news-scout.
 #
-# This workflow runs on pull requests that modify the news-scout service,
-# excluding the master branch.
+# This workflow runs on pushes and pull requests that modify the crate at the
+# repository root, excluding the default branch (main).
 
 name: Check News Scout
 
 on:
   push:
-    branches-ignore: [ master ]
+    branches-ignore: [ main ]
     paths:
-      - 'services/news-scout/**'
+      - 'src/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'Makefile'
   pull_request:
-    branches-ignore: [ master ]
+    branches-ignore: [ main ]
     paths:
-      - 'services/news-scout/**'
+      - 'src/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'Makefile'
 
 jobs:
   check:
     name: "Check news-scout"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: services/news-scout
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: "Install dependencies"
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
         with:
           packages: libsqlite3-dev
           version: 1.0
@@ -40,7 +43,7 @@ jobs:
       - name: "Rust Cache"
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: services/news-scout
+          workspaces: .
 
       - name: "Run checks"
         run: make check
