@@ -44,7 +44,7 @@ The application takes a single command as its first argument:
 - `NEWS_SCOUT_PROMPT`: the system prompt used by the `send` command, given inline.
 - `NEWS_SCOUT_PROMPT_FILE`: a file whose contents are used as the `send` system prompt, read once at startup.
 - `OPENROUTER_API_KEY`: the OpenRouter API key used by the `send` command.
-- `OPENROUTER_MODEL`: the OpenRouter model slug used by the `send` command. Defaults to `google/gemini-3.7-flash`.
+- `OPENROUTER_MODEL`: the OpenRouter model slug used by the `send` command. Defaults to `google/gemini-3.8-flash`.
 - `REPORT_CHAT_ID`: the chat where the bot sends reports. Either a plain chat id (`-12345`) or a `chat_id:thread_id` pair (`-12345:1`) to post to a forum topic.
 - `REPORT_TOKEN`: the bot API token for responses.
 - `SENTRY_DSN`: the URL to send [Sentry](https://sentry.io/) errors to.

@@ -50,7 +50,7 @@ LLM or Telegram failures are reported to Sentry, the candidate is kept, and the 
 
 Every command resolves the system prompt once at startup: it is read from `analyze-prompt.md` in the working directory, unless overridden by `NEWS_SCOUT_PROMPT` (inline text) or `NEWS_SCOUT_PROMPT_FILE` (a path whose contents are read). A missing prompt (no override and no default file) is a hard error. Tune it to control what the model ignores and how it rewrites the approved messages.
 
-It requires `OPENROUTER_API_KEY` and uses `OPENROUTER_MODEL` (defaults to `google/gemini-3.7-flash`).
+It requires `OPENROUTER_API_KEY` and uses `OPENROUTER_MODEL` (defaults to `google/gemini-3.8-flash`).
 
 ## Exclusions
 

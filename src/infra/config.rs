@@ -46,7 +46,7 @@ fn default_database_path() -> String {
 }
 
 fn default_openrouter_model() -> String {
-    "google/gemini-3.7-flash".to_string()
+    "google/gemini-3.8-flash".to_string()
 }
 
 fn default_max_message_age() -> i64 {
