@@ -33,7 +33,3 @@ jobs:
           push: true
           tags: ghcr.io/umonkey/news-scout:latest
           platforms: linux/amd64
-          # mode=max is required so the dependency-build layer in the builder
-          # stage is exported; a registry cache avoids the 10 GB GHA cap.
-          cache-from: type=registry,ref=ghcr.io/umonkey/news-scout:buildcache
-          cache-to: type=registry,ref=ghcr.io/umonkey/news-scout:buildcache,mode=max,ignore-error=true
