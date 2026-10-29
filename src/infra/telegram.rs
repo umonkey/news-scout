@@ -167,6 +167,39 @@ impl TelegramClient {
         Ok(())
     }
 
+    /// Disable incoming calls and secret chats for this session only.
+    ///
+    /// Equivalent to turning off "Accept Calls" and "Accept Secret Chats" for this
+    /// session in Telegram's device list. Idempotent; safe to call on every start.
+    pub async fn disable_incoming_requests(&self) -> Result<()> {
+        let tl::enums::account::Authorizations::Authorizations(auths) = self
+            .client
+            .invoke(&tl::functions::account::GetAuthorizations {})
+            .await?;
+
+        let Some(hash) = auths.authorizations.iter().find_map(|auth| match auth {
+            tl::enums::Authorization::Authorization(a) if a.current => Some(a.hash),
+            _ => None,
+        }) else {
+            return Err(anyhow!(
+                "current session missing from account authorizations"
+            ));
+        };
+
+        self.client
+            .invoke(&tl::functions::account::ChangeAuthorizationSettings {
+                confirmed: false,
+                hash,
+                encrypted_requests_disabled: Some(true),
+                call_requests_disabled: Some(true),
+            })
+            .await?;
+
+        log::info!("Incoming calls and secret chats disabled for this session.");
+
+        Ok(())
+    }
+
     pub async fn folder_peer_ids(&self, folder_name: &str) -> Result<Option<HashSet<i64>>> {
         let filters = self
             .client

@@ -68,6 +68,10 @@ impl ReaderService {
 
         self.client.check_authorization().await?;
 
+        if let Err(e) = self.client.disable_incoming_requests().await {
+            log::warn!("Could not disable incoming calls/secret chats for this session: {e}");
+        }
+
         let mut runner_handle = runner_handle.fuse();
 
         // The update stream must be created before `seed_peers()`: creating it
