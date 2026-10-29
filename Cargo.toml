@@ -1,6 +1,6 @@
 [package]
 name = "news-scout"
-version = "0.2.0"
+version = "2026.10.29"
 edition = "2024"
 
 [dependencies]

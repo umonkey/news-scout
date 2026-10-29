@@ -5,7 +5,7 @@ use grammers_client::Client;
 use grammers_client::client::{
     DialogIter, MessageIter, PasswordToken, UpdateStream, UpdatesConfiguration,
 };
-use grammers_mtsender::SenderPool;
+use grammers_mtsender::{ConnectionParams, SenderPool};
 use grammers_session::storages::SqliteSession;
 use grammers_session::types::PeerRef;
 use grammers_session::updates::UpdatesLike;
@@ -27,11 +27,17 @@ impl TelegramClient {
     pub async fn new(api_id: i32, api_hash: String, session_path: String) -> Result<Self> {
         let session = Arc::new(SqliteSession::open(session_path).await?);
 
+        let params = ConnectionParams {
+            device_model: "Docker".to_string(),
+            app_version: format!("{} {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+            ..Default::default()
+        };
+
         let SenderPool {
             runner,
             handle,
             updates,
-        } = SenderPool::new(session, api_id);
+        } = SenderPool::with_configuration(session, api_id, params);
 
         let client = Client::new(handle);
 
